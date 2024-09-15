@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Money"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Ale and Tale Tavern.exe
+  Version: 
+  Date   : 2024-09-16
+  Author : skdia
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(INJECT,48 89 77 38 48 8B 47 30 48 8B C8 48 8B F1) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [rdi+38],#10000
+  mov rax,[rdi+30]
+  mov rcx,rax
+  mov rsi,rcx
+  jmp return
+
+INJECT:
+  jmp far newmem
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 48 89 77 38 48 8B 47 30 48 8B C8 48 8B F1
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 18944F6406C
+
+18944F64044: 48 83 EC 40        - sub rsp,40
+18944F64048: 48 89 75 F0        - mov [rbp-10],rsi
+18944F6404C: 48 89 7D F8        - mov [rbp-08],rdi
+18944F64050: 48 8B F9           - mov rdi,rcx
+18944F64053: 48 8B F2           - mov rsi,rdx
+18944F64056: BA 01 00 00 00     - mov edx,00000001
+18944F6405B: 48 8B 07           - mov rax,[rdi]
+18944F6405E: FF 90 A8 00 00 00  - call qword ptr [rax+000000A8]
+18944F64064: 48 8B 47 38        - mov rax,[rdi+38]
+18944F64068: 48 89 45 E8        - mov [rbp-18],rax
+// ---------- INJECTING HERE ----------
+18944F6406C: 48 89 77 38        - mov [rdi+38],rsi
+// ---------- DONE INJECTING  ----------
+18944F64070: 48 8B 47 30        - mov rax,[rdi+30]
+18944F64074: 48 8B C8           - mov rcx,rax
+18944F64077: 48 8B F1           - mov rsi,rcx
+18944F6407A: 48 85 C0           - test rax,rax
+18944F6407D: 75 02              - jne 18944F64081
+18944F6407F: EB 0E              - jmp 18944F6408F
+18944F64081: 4C 8B 47 38        - mov r8,[rdi+38]
+18944F64085: 48 8B CE           - mov rcx,rsi
+18944F64088: 48 8B 55 E8        - mov rdx,[rbp-18]
+18944F6408C: FF 56 18           - call qword ptr [rsi+18]
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
